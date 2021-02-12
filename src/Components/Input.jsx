@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Table } from 'react-bootstrap';
 var shortUrl = require('node-url-shortener');
 
@@ -23,6 +23,19 @@ const Input = () => {
     setshow('');
     document.getElementById('fullUrl').value = '';
   };
+
+  useEffect(() => {
+    const local_datas = window.localStorage.getItem('short-urls-list');
+    if (local_datas) {
+      console.log(local_datas);
+      setUrls(JSON.parse(local_datas));
+      setshow('');
+    }
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem('short-urls-list', JSON.stringify(Urls));
+  }, [Urls]);
 
   return (
     <>
